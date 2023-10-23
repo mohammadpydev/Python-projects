@@ -74,3 +74,54 @@ pip install requests
     # Error handling for unsuccessful response
     print(f"Request failed with status code: {response.status_code}")
   ```
+  And you can write too
+  ```py
+  response.raise_for_status()
+  data = response.json()
+  ```
+  <details>
+  <summary> Responses HTTP code </summary>
+    HTTP response status codes are three-digit codes that indicate the outcome of an HTTP request. These status codes are grouped into different classes, each of which has a specific meaning. Here are some of the most common HTTP response status codes and their meanings:
+
+    **1xx Informational:**
+
+    `100 Continue`: The server has received the initial part of the request, and it's waiting for the client to send the remainder.
+
+    **2xx Successful:**
+
+    `200 OK`: The request was successful, and the server has fulfilled it.
+
+    `201 Created`: The request has been successfully processed, resulting in the creation of a new resource.
+
+    `204 No Content:` The request was successful, but there is no data to return (often used for DELETE requests).
+
+    **3xx Redirection:**
+
+    `301 Moved Permanently:` The requested resource has been moved to a different URL permanently.
+
+    `302 Found (or 303 See Other):` The requested resource is temporarily located at a different URL.
+
+    `307 Temporary Redirect:` Similar to 302, indicating a temporary redirection.
+
+    **4xx Client Errors:**
+
+    `400 Bad Request:` The request is malformed or contains invalid syntax.
+
+    `401 Unauthorized:` The request requires authentication, and the provided credentials are invalid.
+
+    `403 Forbidden:` The server understood the request but refuses to fulfill it (often due to insufficient permissions).
+
+    `404 Not Found:` The requested resource could not be found on the server.
+
+    `405 Method Not Allowed:` The HTTP method used in the request is not allowed for the specified resource.
+
+    **5xx Server Errors:**
+
+    `500 Internal Server Error:` A generic error message indicating that the server encountered an unexpected condition.
+
+    `501 Not Implemented:` The server does not support the functionality required to fulfill the request.
+
+    `503 Service Unavailable:` The server is temporarily unable to handle the request, often due to being overloaded or undergoing maintenance.
+
+    These status codes are an essential part of the HTTP protocol, and they provide information about the outcome of a request, allowing the client to respond appropriately. When making HTTP requests in your code, it's crucial to check the response status code to determine whether the request was successful and how to handle any errors or redirections.
+  </details>  
