@@ -1,6 +1,6 @@
 # Making HTTP Requests in Python
 
-![Requests Python Logo](Requests_Python_Logo.png)
+<img src="Requests_Python_Logo.png" alt="drawing" style="width:200px;"/>
 
 In Python, you can interact with web services, APIs, and websites by making HTTP requests. This is commonly done using libraries like **`requests`**, which simplifies the process of sending HTTP requests and handling responses. This document will guide you through the process of making HTTP requests in Python.
 
