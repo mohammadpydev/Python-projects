@@ -1,5 +1,7 @@
 # Making HTTP Requests in Python
 
+![alt text here](/Requests_Python_Logo.png)
+
 In Python, you can interact with web services, APIs, and websites by making HTTP requests. This is commonly done using libraries like **`requests`**, which simplifies the process of sending HTTP requests and handling responses. This document will guide you through the process of making HTTP requests in Python.
 
 ## Prerequisites
@@ -272,3 +274,6 @@ proxies = {
 requests.get('http://example.org', proxies=proxies)
   ```
   
+## ***References***  
+[Requests: HTTP for Humans™](https://web.archive.org/web/20220809124220/https://requests.readthedocs.io/en/latest/
+"Requests is an elegant and simple HTTP library for Python, built for human beings.")
