@@ -132,90 +132,143 @@ pip install requests
 
 ## Handling Response Content
 
-### Handling JSON Response:
-To handle a JSON response, you can use the `.json()` method provided by the requests library. It automatically parses the JSON response into a Python dictionary.
-
-```py
-import requests
-
-url = "https://jsonplaceholder.typicode.com/posts/1"
-response = requests.get(url)
-
-if response.status_code == 200:
-    # Parse JSON response
-    data = response.json()
-    print("JSON Response:")
-    print(data)
-else:
-    print(f"Request failed with status code: {response.status_code}")
-
-```
-
-### Handling Binary Response:
-
-To handle binary content, such as downloading an image or a file, you can use the `.content` attribute of the response, which returns the response content as bytes.
-
-```py
-import requests
-
-url = "https://example.com/some-image.jpg"
-response = requests.get(url)
-
-if response.status_code == 200:
-    # Access binary content
-    binary_data = response.content
-    with open("downloaded_image.jpg", "wb") as file:
-        file.write(binary_data)
-    print("Binary data saved as downloaded_image.jpg")
-else:
-    print(f"Request failed with status code: {response.status_code}")
-
-```
-### Handling Text Response:
-
-To handle text content, you can use the `.text` attribute of the response, which returns the response content as a string.
-
-```py
-import requests
-
-url = "https://example.com/some-text-file.txt"
-response = requests.get(url)
-
-if response.status_code == 200:
-    # Access text content
-    text_data = response.text
-    print("Text Response:")
-    print(text_data)
-else:
-    print(f"Request failed with status code: {response.status_code}")
-
-```
-
-> :bulb: **Tip:** Depending on the response content type and your application's needs, you can use the appropriate method to work with JSON, binary data, or text. Make sure to check the Content-Type header in the response to ensure you are handling the content correctly.
->
-<details>
-  <summary> Check the Content-Type header to your code: </summary>
-  You can check the Content-Type header in the response using the headers attribute of the response object in the requests library. Here's how you can do it:
+- ### Handling JSON Response:
+  To handle a JSON response, you can use the `.json()` method provided by the requests library. It automatically parses the JSON response into a Python dictionary.
 
   ```py
-    import requests
+  import requests
 
-  url = "https://example.com/some-resource"
+  url = "https://jsonplaceholder.typicode.com/posts/1"
   response = requests.get(url)
 
   if response.status_code == 200:
-      content_type = response.headers.get('Content-Type')
-      if content_type is not None:
-          print(f"Content-Type: {content_type}")
-      else:
-          print("Content-Type header not found in the response.")
+      # Parse JSON response
+      data = response.json()
+      print("JSON Response:")
+      print(data)
   else:
       print(f"Request failed with status code: {response.status_code}")
+
   ```
 
-</details>
+- ### Handling Binary Response:
 
+  To handle binary content, such as downloading an image or a file, you can use the `.content` attribute of the response, which returns the response content as bytes.
 
+  ```py
+  import requests
 
+  url = "https://example.com/some-image.jpg"
+  response = requests.get(url)
 
+  if response.status_code == 200:
+      # Access binary content
+      binary_data = response.content
+      with open("downloaded_image.jpg", "wb") as file:
+          file.write(binary_data)
+      print("Binary data saved as downloaded_image.jpg")
+  else:
+      print(f"Request failed with status code: {response.status_code}")
 
+  ```
+- ### Handling Text Response:
+
+  To handle text content, you can use the `.text` attribute of the response, which returns the response content as a string.
+
+  ```py
+  import requests
+
+  url = "https://example.com/some-text-file.txt"
+  response = requests.get(url)
+
+  if response.status_code == 200:
+      # Access text content
+      text_data = response.text
+      print("Text Response:")
+      print(text_data)
+  else:
+      print(f"Request failed with status code: {response.status_code}")
+
+  ```
+
+  > :bulb: **Tip:** Depending on the response content type and your application's needs, you can use the appropriate method to work with JSON, binary data, or text. Make sure to check the Content-Type header in the response to ensure you are handling the content correctly.
+  >
+  <details>
+    <summary> Check the Content-Type header to your code: </summary>
+      You can check the Content-Type header in the response using the headers attribute of the response object in the requests library. Here's how you can do it:
+
+      ```py
+        import requests
+
+      url = "https://example.com/some-resource"
+      response = requests.get(url)
+
+      if response.status_code == 200:
+          content_type = response.headers.get('Content-Type')
+          if content_type is not None:
+              print(f"Content-Type: {content_type}")
+          else:
+              print("Content-Type header not found in the response.")
+      else:
+          print(f"Request failed with status code: {response.status_code}")
+      ```
+
+  </details>
+
+## Set custom headers in an HTTP request
+  You can set custom headers in an HTTP request made using the requests library in Python by passing a dictionary with the headers you want to include as the headers parameter. Here's how to set header values in a request:
+  ```py
+  import requests
+
+url = "https://example.com/some-resource"
+
+# Define custom headers in a dictionary
+headers = {
+    "User-Agent": "MyCustomUserAgent/1.0",
+    "Authorization": "Bearer YourAccessToken",
+    "Content-Type": "application/json",
+}
+
+# Make the request with custom headers
+response = requests.get(url, headers=headers)
+
+if response.status_code == 200:
+    # Process the response here
+    print("Request successful")
+else:
+    print(f"Request failed with status code: {response.status_code}")
+
+  ```
+  In this example, we set three custom headers: "User-Agent", "Authorization", and "Content-Type". These headers can be used to identify your application, provide authentication tokens, or specify the content type of the request.
+
+You can customize the headers to meet the specific requirements of the API or service you are interacting with. Just include the desired headers in the headers dictionary when making the request.
+
+## Timeouts
+The timeout parameter in the requests library allows you to set both the connection timeout and the read timeout for an HTTP request. You can specify a single timeout value or a tuple with two values to set both timeouts. Here's how to use the timeout parameter:
+
+ - ### Single Timeout Value:
+    When you provide a single timeout value, it sets both the connection timeout and the read timeout to the same value. If either the connection or the response doesn't occur within this time, a timeout exception is raised.
+    ```py
+    # A single timeout value of 10 seconds
+    response = requests.get(url="https://example.com/some-resource", timeout=10)  
+    ```
+ - ### Tuple with Two Timeout Values:
+    You can provide a tuple with two values to set different timeouts for the connection and the read. The first value is the connection timeout, and the second value is the read timeout. This allows you to specify different time limits for establishing a connection and for receiving the response.
+    ```py
+    # Connection timeout of 5 seconds, read timeout of 10 seconds
+    response = requests.get(url, timeout=(5, 10))  
+   ```
+## Proxies
+  If you need to use a proxy, you can configure individual requests with the proxies argument to any request method:
+
+  ```py
+  import requests
+
+proxies = {
+  'http': 'http://10.10.1.10:3128',
+  'https': 'http://10.10.1.10:1080',
+}
+
+requests.get('http://example.org', proxies=proxies)
+  ```
+  
