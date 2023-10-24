@@ -56,11 +56,15 @@ pip install requests
   ```py
   data = {
     "name": "xxx",
-    "userId": 1}```
+    "userId": 1} 
+    ```
 - ### Send the request:
   Use the appropriate requests method (e.g., requests.get(), requests.post()) to send the request.
   ```py
-  response = requests.post(url, data=data)
+  response = requests.post(url, params=data)
+  # You can see that the URL has been correctly encoded by printing the URL:
+  print(response.url)
+  # https://example.com/api/data?name=xxx&userId=1
   ```
 - ### Handle the response:
   Once you receive a response, you can access the response data, status code, headers, and more.
@@ -125,3 +129,93 @@ pip install requests
 
     These status codes are an essential part of the HTTP protocol, and they provide information about the outcome of a request, allowing the client to respond appropriately. When making HTTP requests in your code, it's crucial to check the response status code to determine whether the request was successful and how to handle any errors or redirections.
   </details>  
+
+## Handling Response Content
+
+### Handling JSON Response:
+To handle a JSON response, you can use the `.json()` method provided by the requests library. It automatically parses the JSON response into a Python dictionary.
+
+```py
+import requests
+
+url = "https://jsonplaceholder.typicode.com/posts/1"
+response = requests.get(url)
+
+if response.status_code == 200:
+    # Parse JSON response
+    data = response.json()
+    print("JSON Response:")
+    print(data)
+else:
+    print(f"Request failed with status code: {response.status_code}")
+
+```
+
+### Handling Binary Response:
+
+To handle binary content, such as downloading an image or a file, you can use the `.content` attribute of the response, which returns the response content as bytes.
+
+```py
+import requests
+
+url = "https://example.com/some-image.jpg"
+response = requests.get(url)
+
+if response.status_code == 200:
+    # Access binary content
+    binary_data = response.content
+    with open("downloaded_image.jpg", "wb") as file:
+        file.write(binary_data)
+    print("Binary data saved as downloaded_image.jpg")
+else:
+    print(f"Request failed with status code: {response.status_code}")
+
+```
+### Handling Text Response:
+
+To handle text content, you can use the `.text` attribute of the response, which returns the response content as a string.
+
+```py
+import requests
+
+url = "https://example.com/some-text-file.txt"
+response = requests.get(url)
+
+if response.status_code == 200:
+    # Access text content
+    text_data = response.text
+    print("Text Response:")
+    print(text_data)
+else:
+    print(f"Request failed with status code: {response.status_code}")
+
+```
+
+> :bulb: **Tip:** Depending on the response content type and your application's needs, you can use the appropriate method to work with JSON, binary data, or text. Make sure to check the Content-Type header in the response to ensure you are handling the content correctly.
+>
+<details>
+  <summary> Check the Content-Type header to your code: </summary>
+  You can check the Content-Type header in the response using the headers attribute of the response object in the requests library. Here's how you can do it:
+
+  ```py
+    import requests
+
+  url = "https://example.com/some-resource"
+  response = requests.get(url)
+
+  if response.status_code == 200:
+      content_type = response.headers.get('Content-Type')
+      if content_type is not None:
+          print(f"Content-Type: {content_type}")
+      else:
+          print("Content-Type header not found in the response.")
+  else:
+      print(f"Request failed with status code: {response.status_code}")
+  ```
+
+</details>
+
+
+
+
+
