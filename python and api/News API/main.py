@@ -2,7 +2,7 @@ import requests
 
 link = "https://newsapi.org/v2/everything"
 
-key_api = "0f8745c80782467689db00577be47930"
+key_api = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 
 Parameters = {
