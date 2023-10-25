@@ -2,7 +2,7 @@ import requests
 
 link = "https://api.openweathermap.org/data/2.5/weather"
 
-key_api = "8fad155383c58b2ef41619449b022efb"
+key_api = "xxxxxxxxxxxxxxxxxxxxxxx"
 
 
 Parameters = {
